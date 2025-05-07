@@ -1,6 +1,7 @@
 package com.example.mapapp.di
 
 import com.example.mapapp.data.GeoLocationApi
+import com.example.mapapp.data.GeoapifyApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +32,15 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GeoLocationApi::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideGeoapifyApi(okHttpClient: OkHttpClient): GeoapifyApi{
+        return Retrofit.Builder()
+            .baseUrl("https://api.geoapify.com")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GeoapifyApi::class.java)
     }
 }

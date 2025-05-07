@@ -31,6 +31,8 @@ android {
 
         resValue("string", "open_weather_api_key", "${localProperties["OPEN_WEATHER_API_KEY"]}")
         resValue("string","mapbox_sdk_api_key","${localProperties["MAPBOX_SDK_API_KEY"]}")
+        resValue("string","geoapify_api_key","${localProperties["GEOAPIFY_API_KEY"]}")
+
 
     }
 

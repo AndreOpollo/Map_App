@@ -28,6 +28,8 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotation
+import com.mapbox.maps.extension.compose.annotation.generated.CircleAnnotationInteractionsState
+import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotationInteractionsState
 import com.mapbox.maps.extension.compose.annotation.generated.PolylineAnnotation
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import kotlinx.coroutines.CoroutineScope
@@ -52,6 +54,15 @@ fun MapScreen(
 
     // Points list that updates with animation
     val animatedPoints = remember { mutableStateOf<List<Point>>(listOf(start)) }
+
+    LaunchedEffect(uiState.location) {
+        uiState.location?.let { location ->
+            val start = Point.fromLngLat(36.8263840993416, -1.30326415)
+            val end = Point.fromLngLat(location.lon, location.lat)
+            val points = "${start.longitude()},${start.latitude()}|${end.longitude()},${end.latitude()}"
+            viewModel.getPoints(points)
+        }
+    }
 
 
     LaunchedEffect(uiState.location) {
@@ -84,6 +95,8 @@ fun MapScreen(
                 delay(delayPerStep)
 
             }
+            val pointsString = "${start.longitude()},${start.latitude()}|${end.longitude()},${end.latitude()}"
+            viewModel.getPoints(pointsString)
 
         }
 
@@ -129,8 +142,18 @@ fun MapScreen(
                 lineColor = Color(0xff000000)
                 lineWidth = 5.0
             }
+            uiState.routes?.let { routePoints ->
+                PolylineAnnotation(points = routePoints) {
+                    lineColor = Color.Blue
+                    lineWidth = 4.0
+                }
+            }
 
             CircleAnnotation(start) {
+                CircleAnnotationInteractionsState().onClicked {
+                    Log.d("Clicked","Destination clicked")
+                    true
+                }
                 circleColor = Color.Red
                 circleRadius = 6.0
             }
@@ -139,7 +162,13 @@ fun MapScreen(
             uiState.location?.let {
                     location->
                 val end = Point.fromLngLat(location.lon,location.lat)
-                CircleAnnotation(end) {
+                CircleAnnotation(end, onClick ={
+                    false
+                } ) {
+                    PointAnnotationInteractionsState().onClicked {
+                        Log.d("Clicked","Destination clicked")
+                        true
+                    }
                     circleColor = Color.Green
                     circleRadius = 6.0
                 }

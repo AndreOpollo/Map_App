@@ -3,4 +3,7 @@
     <string name="openweather_api_key" translatable="false" tools:ignore="UnusedResources">
         @string/open_weather_api_key
     </string>
+    <string name="geoapify_api_key" translatable="false" tools:ignore="UnusedResources">
+        @string/geoapify_api_key
+    </string>
 </resources>

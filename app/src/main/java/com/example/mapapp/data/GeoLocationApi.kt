@@ -2,7 +2,7 @@ package com.example.mapapp.data
 
 
 import android.provider.Settings.Global.getString
-import com.example.mapapp.data.models.GeoLocationItem
+import com.example.mapapp.data.models.geolocation.GeoLocationItem
 import com.example.mapapp.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query

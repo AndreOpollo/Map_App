@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mapapp.screens.ui.GeolocationViewModel
-import com.example.mapapp.screens.ui.MapScreen
+import com.example.mapapp.screens.ui.MapScreenWithRoute
 import com.example.mapapp.ui.theme.MapAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         val viewModel by viewModels<GeolocationViewModel>()
         setContent {
             MapAppTheme {
-                MapScreen(viewModel = viewModel)
+                MapScreenWithRoute(viewModel = viewModel)
             }
         }
     }
